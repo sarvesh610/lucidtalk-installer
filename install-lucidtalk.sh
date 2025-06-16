@@ -350,12 +350,25 @@ install_lucidtalk() {
     
     mkdir -p "$INSTALL_DIR"
     
-    # Extract the installer package
-    echo "📦 Extracting application..."
-    unzip -q LucidTalk-Installer.zip -d extracted/
+    # Extract the bundled installer package
+    echo "📦 Extracting bundled installer..."
+    unzip -q LucidTalk-Installer.zip -d bundled/
     
-    # Copy all extracted contents to install directory
-    cp -r extracted/* "$INSTALL_DIR/"
+    # Check what we extracted
+    if [[ -f "bundled/LucidTalk.zip" ]]; then
+        echo "📦 Extracting LucidTalk application..."
+        unzip -q bundled/LucidTalk.zip -d "$INSTALL_DIR"
+        
+        # Copy the Whisper model
+        if [[ -f "bundled/ggml-base.bin" ]]; then
+            echo "🧠 Installing AI model..."
+            mkdir -p "$INSTALL_DIR/models"
+            cp bundled/ggml-base.bin "$INSTALL_DIR/models/"
+        fi
+    else
+        print_error "Unexpected bundle structure"
+        exit 1
+    fi
     
     cd "$INSTALL_DIR"
     
@@ -363,7 +376,9 @@ install_lucidtalk() {
     echo "⚙️ Installing dependencies..."
     if ! npm install > /dev/null 2>&1; then
         print_error "Failed to install dependencies"
-        exit 1
+        print_info "You may need to run 'npm install' manually in $INSTALL_DIR"
+    else
+        print_success "Dependencies installed successfully"
     fi
     
     # Create desktop launcher
