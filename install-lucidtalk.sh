@@ -214,6 +214,7 @@ const Corestore = require('corestore');
 const Hyperdrive = require('hyperdrive');
 const Hyperswarm = require('hyperswarm');
 const fs = require('fs');
+const path = require('path');
 
 const DISTRIBUTION_KEY = process.argv[2];
 
@@ -224,8 +225,9 @@ async function downloadViaP2P() {
     try {
         console.log('🔍 Connecting to P2P network...');
         
-        // Initialize corestore and hyperdrive
-        const store = new Corestore('./lucidtalk-temp');
+        // Initialize corestore with proper path
+        const storePath = path.join(process.cwd(), 'lucidtalk-temp');
+        const store = new Corestore(storePath);
         drive = new Hyperdrive(store, DISTRIBUTION_KEY);
         
         // CRITICAL: Initialize Hyperswarm for peer discovery
