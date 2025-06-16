@@ -440,6 +440,10 @@ main() {
     echo "🔒 Privacy guarantee: All processing happens on your machine."
     echo "    No data is sent to external servers."
     echo ""
+    echo "📝 Optional: Help us improve by reporting successful installation:"
+    echo "   https://github.com/sarvesh610/lucidtalk-installer/issues"
+    echo "   (Just create an issue saying 'Installed successfully!')"
+    echo ""
     print_success "Enjoy private, intelligent meeting transcription!"
 }
 
