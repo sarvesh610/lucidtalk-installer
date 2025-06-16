@@ -189,16 +189,16 @@ download_via_p2p() {
     
     cd "$TEMP_DIR"
     
-    # Create package.json with required dependencies
+    # Create package.json with working versions
     echo "📦 Installing P2P components..."
     cat > package.json << EOF
 {
   "name": "lucidtalk-p2p-downloader",
   "version": "1.0.0",
   "dependencies": {
-    "corestore": "^6.8.1",
-    "hyperdrive": "^10.20.3",
-    "hyperswarm": "^4.7.15"
+    "corestore": "^7.4.5",
+    "hyperdrive": "^11.13.4",
+    "hyperswarm": "^4.11.7"
   }
 }
 EOF
@@ -206,7 +206,7 @@ EOF
     # Install dependencies
     npm install > /dev/null 2>&1
     
-    # Create the P2P download script with proper Hyperswarm support
+    # Create the P2P download script with exact working configuration
     cat > p2p-download.js << 'EOJS'
 #!/usr/bin/env node
 
@@ -225,12 +225,11 @@ async function downloadViaP2P() {
     try {
         console.log('🔍 Connecting to P2P network...');
         
-        // Initialize corestore with proper path
-        const storePath = path.join(process.cwd(), 'lucidtalk-temp');
-        const store = new Corestore(storePath);
+        // Initialize corestore (use same pattern as working seeder)
+        const store = new Corestore('./lucidtalk-temp');
         drive = new Hyperdrive(store, DISTRIBUTION_KEY);
         
-        // CRITICAL: Initialize Hyperswarm for peer discovery
+        // Initialize Hyperswarm for peer discovery
         swarm = new Hyperswarm();
         
         // Set up connection handling
