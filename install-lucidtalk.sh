@@ -428,6 +428,10 @@ install_lucidtalk() {
     print_info "Installing main dependencies..."
     cd "$INSTALL_DIR"
     
+    # Remove distributed node_modules to avoid binary compatibility issues
+    print_info "Rebuilding native dependencies for local system..."
+    rm -rf node_modules package-lock.json
+    
     # Create a simple package.json for quick installation
     print_info "Installing only essential dependencies (electron)..."
     
