@@ -425,9 +425,19 @@ install_lucidtalk() {
     print_info "Extracting LucidTalk application..."
     unzip -q LucidTalk.zip -d "$INSTALL_DIR"
     
-    print_info "Installing dependencies..."
+    print_info "Installing main dependencies..."
     cd "$INSTALL_DIR"
     npm install > /dev/null 2>&1
+    
+    print_info "Installing backend dependencies..."
+    if [[ -d "backend" ]]; then
+        cd backend
+        npm install > /dev/null 2>&1
+        cd ..
+        print_success "Backend dependencies installed"
+    else
+        print_warning "Backend directory not found"
+    fi
     
     print_info "Setting up AI model..."
     mkdir -p models
