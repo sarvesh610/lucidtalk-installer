@@ -4,7 +4,7 @@
 
 ### **One Command Does Everything**
 ```bash
-bash <(curl -s https://your-site.com/install-lucidtalk.sh) 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
+bash <(curl -s https://your-site.com/install-lucidtalk.sh) f009372b2ce09f2764201afbfee3756b7df04503ce5e9c1e2614f93f2f4abc01
 ```
 
 **That's it!** The script handles:
@@ -20,7 +20,7 @@ bash <(curl -s https://your-site.com/install-lucidtalk.sh) 9671133d950532046af93
 
 Just paste this in Terminal:
 
-bash <(curl -s https://your-site.com/install-lucidtalk.sh) 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
+bash <(curl -s https://your-site.com/install-lucidtalk.sh) f009372b2ce09f2764201afbfee3756b7df04503ce5e9c1e2614f93f2f4abc01
 
 ✨ Features:
 • Real-time transcription during meetings
@@ -71,7 +71,7 @@ Takes 5 minutes. No tech knowledge needed!
    • Or run: cd '/Users/friend/Applications/LucidTalk' && npm start
 
 💬 Share LucidTalk with friends using this key:
-   9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
+   f009372b2ce09f2764201afbfee3756b7df04503ce5e9c1e2614f93f2f4abc01
 
 ✅ Enjoy private, intelligent meeting transcription!
 ```
