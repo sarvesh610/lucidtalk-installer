@@ -4,13 +4,13 @@
 
 ### **Simple One-Liner (Recommended)**
 ```bash
-bash <(curl -s https://your-site.com/get-lucidtalk.sh) 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+bash <(curl -s https://your-site.com/get-lucidtalk.sh) 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 ```
 
 ### **Or Direct Download Script**
 ```bash
 curl -O https://your-site.com/simple-lucidtalk-downloader.js
-node simple-lucidtalk-downloader.js 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+node simple-lucidtalk-downloader.js 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 ```
 
 ## 🚀 **Complete Friend Experience**
@@ -20,7 +20,7 @@ node simple-lucidtalk-downloader.js 524da8b105ea7e875defa25fbfe582f92a1dcaa510a0
 🎙️ Hey! Want to try LucidTalk for private meeting transcription?
 
 Just paste this in Terminal:
-bash <(curl -s https://your-site.com/get-lucidtalk.sh) 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+bash <(curl -s https://your-site.com/get-lucidtalk.sh) 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 
 Features:
 • Real-time transcription with AI summaries
@@ -84,7 +84,7 @@ Choose option (1-3):
    • Everything runs locally
 
 💬 Share LucidTalk with friends using this key:
-   524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+   9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 
 ✅ Enjoy private, intelligent meeting transcription!
 ```
