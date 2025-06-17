@@ -291,7 +291,8 @@ async function downloadLucidTalk() {
             version: "1.0.0",
             dependencies: {
                 "corestore": "^7.4.4",
-                "hyperdrive": "^11.0.0"
+                "hyperdrive": "^11.0.0",
+                "hyperswarm": "^4.7.15"
             }
         };
         
@@ -305,15 +306,58 @@ async function downloadLucidTalk() {
         // Load modules
         const Corestore = require(path.join(TEMP_DIR, 'node_modules', 'corestore'));
         const Hyperdrive = require(path.join(TEMP_DIR, 'node_modules', 'hyperdrive'));
+        const Hyperswarm = require(path.join(TEMP_DIR, 'node_modules', 'hyperswarm'));
         
         const store = new Corestore(path.join(TEMP_DIR, 'hyperdrive'));
-        const drive = new Hyperdrive(store, DISTRIBUTION_KEY);
+        const drive = new Hyperdrive(store, Buffer.from(DISTRIBUTION_KEY, 'hex'));
         
         await drive.ready();
-        console.log('✅ Connected to P2P network!');
+        console.log('✅ Drive ready, connecting to P2P network...');
         
-        console.log('📋 Loading package information...');
-        const manifestData = await drive.get('/manifest.json');
+        // Setup swarm connection with proper event handling
+        const swarm = new Hyperswarm();
+        let peerConnected = false;
+        
+        swarm.on('connection', (connection) => {
+            console.log('🔗 Connected to peer');
+            peerConnected = true;
+            store.replicate(connection);
+        });
+        
+        swarm.join(drive.discoveryKey);
+        await swarm.flush();
+        console.log('✅ Joined P2P swarm');
+        
+        // Wait for peer connections and file synchronization
+        console.log('⏳ Waiting for peer discovery and file sync...');
+        let retries = 0;
+        const maxRetries = 10;
+        let manifestData = null;
+        
+        while (retries < maxRetries && !manifestData) {
+            try {
+                // Wait progressively longer for network sync
+                const waitTime = Math.min(2000 + (retries * 1000), 8000);
+                await new Promise(resolve => setTimeout(resolve, waitTime));
+                
+                console.log(`📋 Attempting to load manifest (attempt ${retries + 1}/${maxRetries})...`);
+                manifestData = await drive.get('/manifest.json');
+                
+                if (manifestData) {
+                    console.log('✅ Manifest loaded successfully!');
+                    break;
+                }
+            } catch (error) {
+                console.log(`⚠️  Attempt ${retries + 1} failed, retrying...`);
+            }
+            retries++;
+        }
+        
+        if (!manifestData) {
+            await swarm.destroy();
+            throw new Error('Unable to access P2P files after multiple attempts. The seeder may be offline.');
+        }
+        
         const manifest = JSON.parse(manifestData.toString());
         
         console.log(`📦 Found: ${manifest.name} v${manifest.version}`);
@@ -335,6 +379,8 @@ async function downloadLucidTalk() {
         console.log('📦 Extracting installation files...');
         execSync(`unzip -q "${installerPath}" -d "${TEMP_DIR}"`);
         
+        // Cleanup P2P connections
+        await swarm.destroy();
         await drive.close();
         console.log('✅ P2P download complete!');
         
