@@ -4,7 +4,7 @@
 
 ### **One Command Does Everything**
 ```bash
-bash <(curl -s https://your-site.com/install-lucidtalk.sh) 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+bash <(curl -s https://your-site.com/install-lucidtalk.sh) 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 ```
 
 **That's it!** The script handles:
@@ -20,7 +20,7 @@ bash <(curl -s https://your-site.com/install-lucidtalk.sh) 524da8b105ea7e875defa
 
 Just paste this in Terminal:
 
-bash <(curl -s https://your-site.com/install-lucidtalk.sh) 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+bash <(curl -s https://your-site.com/install-lucidtalk.sh) 9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 
 ✨ Features:
 • Real-time transcription during meetings
@@ -71,7 +71,7 @@ Takes 5 minutes. No tech knowledge needed!
    • Or run: cd '/Users/friend/Applications/LucidTalk' && npm start
 
 💬 Share LucidTalk with friends using this key:
-   524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
+   9671133d950532046af93939b87556e30bc847aa279c62fc2fdd8970119a5630
 
 ✅ Enjoy private, intelligent meeting transcription!
 ```
@@ -189,7 +189,7 @@ Key should be 64 characters (letters a-f and numbers 0-9)
 ❌ Node.js installation failed
 ℹ️  Please try a different installation method or install manually from nodejs.org
 ```
-**Solution**: Try a different option or manual install
+**Solution**: Try different option or manual install
 
 ## 🎯 **Zero Prerequisites**
 
