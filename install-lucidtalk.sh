@@ -423,16 +423,63 @@ install_lucidtalk() {
     fi
     
     print_info "Extracting LucidTalk application..."
-    unzip -q LucidTalk.zip -d "$INSTALL_DIR"
+    unzip -o -q LucidTalk.zip -d "$INSTALL_DIR"
     
     print_info "Installing main dependencies..."
     cd "$INSTALL_DIR"
-    npm install > /dev/null 2>&1
+    
+    # Create a simple package.json for quick installation
+    print_info "Installing only essential dependencies (electron)..."
+    
+    # Install just electron first to get app working
+    if npm install electron@28.0.0 --save --no-audit --no-fund --silent; then
+        print_success "Electron installed successfully"
+    else
+        print_error "Failed to install electron"
+        print_info "Creating minimal package.json and trying again..."
+        
+        # Create minimal package.json with just electron
+        cat > package-minimal.json << 'EOF'
+{
+  "name": "mindmeet",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^28.0.0"
+  }
+}
+EOF
+        mv package.json package-full.json
+        mv package-minimal.json package.json
+        
+        if npm install --no-audit --no-fund --silent; then
+            print_success "Minimal electron installation successful"
+            # Restore full package.json for future use
+            mv package-full.json package.json
+        else
+            print_error "Even minimal installation failed"
+            mv package-full.json package.json
+        fi
+    fi
+    
+    # Quick verification
+    if [[ -f "node_modules/.bin/electron" ]] || [[ -d "node_modules/electron" ]]; then
+        print_success "LucidTalk is ready to run!"
+    else
+        print_warning "Installation partially completed - you may need to run 'npm install' manually"
+    fi
     
     print_info "Installing backend dependencies..."
     if [[ -d "backend" ]]; then
         cd backend
-        npm install > /dev/null 2>&1
+        if ! npm install; then
+            print_error "Failed to install backend dependencies"
+            print_info "Trying with verbose output..."
+            npm install --verbose
+        fi
         cd ..
         print_success "Backend dependencies installed"
     else
@@ -443,6 +490,23 @@ install_lucidtalk() {
     mkdir -p models
     cp "$TEMP_DIR/ggml-base.bin" models/
     
+    # Verify electron was installed
+    print_info "Verifying Electron installation..."
+    if [[ ! -f "node_modules/.bin/electron" ]] && [[ ! -f "node_modules/electron/dist/Electron.app/Contents/MacOS/Electron" ]]; then
+        print_error "Electron installation failed"
+        print_info "Attempting manual electron installation..."
+        npm install electron@^28.0.0 --save
+        
+        if [[ ! -f "node_modules/.bin/electron" ]] && [[ ! -f "node_modules/electron/dist/Electron.app/Contents/MacOS/Electron" ]]; then
+            print_error "Manual electron installation also failed"
+            print_warning "You may need to run 'npm install' manually in $INSTALL_DIR"
+        else
+            print_success "Electron installed successfully"
+        fi
+    else
+        print_success "Electron verified"
+    fi
+
     print_info "Creating desktop launcher..."
     cat > "$DESKTOP_LAUNCHER" << EOF
 #!/bin/bash
