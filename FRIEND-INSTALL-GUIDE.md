@@ -4,13 +4,13 @@
 
 ### **Simple One-Liner (Recommended)**
 ```bash
-bash <(curl -s https://your-site.com/get-lucidtalk.sh) a864c9bd98b43fe36c3dab8959f1df3bb04d018f5310f9d57c4127523c42d9b8
+bash <(curl -s https://your-site.com/get-lucidtalk.sh) 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
 ```
 
 ### **Or Direct Download Script**
 ```bash
 curl -O https://your-site.com/simple-lucidtalk-downloader.js
-node simple-lucidtalk-downloader.js a864c9bd98b43fe36c3dab8959f1df3bb04d018f5310f9d57c4127523c42d9b8
+node simple-lucidtalk-downloader.js 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
 ```
 
 ## 🚀 **Complete Friend Experience**
@@ -20,7 +20,7 @@ node simple-lucidtalk-downloader.js a864c9bd98b43fe36c3dab8959f1df3bb04d018f5310
 🎙️ Hey! Want to try LucidTalk for private meeting transcription?
 
 Just paste this in Terminal:
-bash <(curl -s https://your-site.com/get-lucidtalk.sh) a864c9bd98b43fe36c3dab8959f1df3bb04d018f5310f9d57c4127523c42d9b8
+bash <(curl -s https://your-site.com/get-lucidtalk.sh) 524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
 
 Features:
 • Real-time transcription with AI summaries
@@ -84,7 +84,7 @@ Choose option (1-3):
    • Everything runs locally
 
 💬 Share LucidTalk with friends using this key:
-   a864c9bd98b43fe36c3dab8959f1df3bb04d018f5310f9d57c4127523c42d9b8
+   524da8b105ea7e875defa25fbfe582f92a1dcaa510a037fe52a5ee5e13a1426e
 
 ✅ Enjoy private, intelligent meeting transcription!
 ```
@@ -119,6 +119,25 @@ Choose option (1-3):
 ## 🔧 **Error Handling**
 
 ### **Common Issues & Solutions**
+
+#### **"Screen Recording Permission Required"**
+```
+❌ Screen Recording permission required for audio capture
+🔧 Open System Settings > Privacy & Security > Screen Recording
+   Add LucidTalk and toggle it ON, then restart the app
+```
+**Solution**: macOS requires permission for system audio capture
+
+#### **"AI Summary Button Disabled"**
+```
+💡 Need transcription data first:
+   1. Start recording a session
+   2. Speak or play audio for the app to capture
+   3. Stop recording
+   4. Enter your AI API key (Groq/OpenAI)
+   5. Generate AI Summary button will become enabled
+```
+**Solution**: Button only enables after recording session with data
 
 #### **"node: command not found"**
 ```
