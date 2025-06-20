@@ -435,32 +435,34 @@ install_lucidtalk() {
     # Create a simple package.json for quick installation
     print_info "Installing only essential dependencies (electron)..."
     
-    # Install just electron first to get app working
-    if npm install electron@28.0.0 --save --no-audit --no-fund --silent; then
-        print_success "Electron installed successfully"
+    # Install all dependencies for Electron Forge
+    print_info "Installing all dependencies for Electron Forge..."
+    if npm install --no-audit --no-fund; then
+        print_success "All dependencies installed successfully"
     else
-        print_error "Failed to install electron"
-        print_info "Creating minimal package.json and trying again..."
+        print_warning "Full installation failed, trying essential dependencies only..."
         
-        # Create minimal package.json with just electron
+        # Create minimal package.json with essential dependencies
         cat > package-minimal.json << 'EOF'
 {
-  "name": "mindmeet",
+  "name": "lucidtalk",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": ".webpack/main",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package"
   },
   "dependencies": {
-    "electron": "^28.0.0"
+    "electron": "^36.5.0",
+    "@electron-forge/cli": "^7.8.1"
   }
 }
 EOF
         mv package.json package-full.json
         mv package-minimal.json package.json
         
-        if npm install --no-audit --no-fund --silent; then
-            print_success "Minimal electron installation successful"
+        if npm install --no-audit --no-fund; then
+            print_success "Essential dependencies installed successfully"
             # Restore full package.json for future use
             mv package-full.json package.json
         else
