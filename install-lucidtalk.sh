@@ -439,6 +439,11 @@ install_lucidtalk() {
     print_info "Installing all dependencies for Electron Forge..."
     if npm install --no-audit --no-fund; then
         print_success "All dependencies installed successfully"
+        
+        # Fix webpack asset relocator compatibility issue
+        print_info "Ensuring webpack compatibility..."
+        npm install @vercel/webpack-asset-relocator-loader@1.7.3 --save-dev --no-audit --no-fund
+        print_success "Webpack compatibility ensured"
     else
         print_warning "Full installation failed, trying essential dependencies only..."
         
@@ -463,6 +468,8 @@ EOF
         
         if npm install --no-audit --no-fund; then
             print_success "Essential dependencies installed successfully"
+            # Fix webpack compatibility for minimal installation too
+            npm install @vercel/webpack-asset-relocator-loader@1.7.3 --save-dev --no-audit --no-fund
             # Restore full package.json for future use
             mv package-full.json package.json
         else
